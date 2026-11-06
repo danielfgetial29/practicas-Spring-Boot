@@ -12,4 +12,17 @@ public class Conductor {
     private String licencia;
     private int telefono;
     private String contrasena;
+
+    //Constructores
+    //Vacio
+    public Conductor(){}
+
+    public Conductor(String id, String nombre, String destino, String licencia, int telefono, String contrasena) {
+        this.id = id;
+        this.nombre = nombre;
+        this.destino = destino;
+        this.licencia = licencia;
+        this.telefono = telefono;
+        this.contrasena = contrasena;
+    }
 }
