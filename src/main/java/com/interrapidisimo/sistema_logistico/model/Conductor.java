@@ -7,4 +7,9 @@ public class Conductor {
 
     //Atributos
     private String id;
+    private String nombre;
+    private String destino;
+    private String licencia;
+    private int telefono;
+    private String contrasena;
 }
