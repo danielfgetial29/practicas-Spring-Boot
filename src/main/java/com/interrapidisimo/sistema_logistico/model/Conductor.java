@@ -8,7 +8,7 @@ public class Conductor {
     //Atributos
     private String id;
     private String nombre;
-    private String destino;
+    private String apellido;
     private String licencia;
     private int telefono;
     private String contrasena;
@@ -17,10 +17,10 @@ public class Conductor {
     //Vacio
     public Conductor(){}
 
-    public Conductor(String id, String nombre, String destino, String licencia, int telefono, String contrasena) {
+    public Conductor(String id, String nombre, String apellido, String licencia, int telefono, String contrasena) {
         this.id = id;
         this.nombre = nombre;
-        this.destino = destino;
+        this.apellido = apellido;
         this.licencia = licencia;
         this.telefono = telefono;
         this.contrasena = contrasena;
@@ -45,12 +45,12 @@ public class Conductor {
         this.nombre = nombre;
     }
 
-    public String getDestino() {
-        return destino;
+    public String getapellido() {
+        return apellido;
     }
 
-    public void setDestino(String destino) {
-        this.destino = destino;
+    public void setapellido(String apellido) {
+        this.apellido = apellido;
     }
 
     public String getLicencia() {
