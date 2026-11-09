@@ -12,8 +12,13 @@ public class AsignacionEnvio {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    //RElacion de muchos a uno
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "envio_id", nullable = false)
     private Envio2 envio;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "conductor_id", nullable = false)
     private  Conductor conductor;
 
     @Column(name = "fecha_asignacion", nullable = false)
@@ -24,5 +29,8 @@ public class AsignacionEnvio {
 
     @Column(length = 500)
     private String observaciones;
+
+    //Constructores
+
 
 }
