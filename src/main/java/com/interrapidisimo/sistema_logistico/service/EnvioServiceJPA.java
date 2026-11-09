@@ -18,12 +18,13 @@ public class EnvioServiceJPA implements EnvioService2{
 
     @Override
     public List<Envio2> findAll() {
-        return List.of();
+        return envioRepository.findAll();
     }
 
     @Override
     public Envio2 findById(Long id) {
-        return null;
+        return envioRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Envio no encontrado con Id "+ id));
     }
 
     //Guardar un envio
@@ -50,6 +51,10 @@ public class EnvioServiceJPA implements EnvioService2{
 
     @Override
     public void deleteById(Long id) {
+        if (!envioRepository.existsById(id)){
+            throw new RuntimeException("Envio no encontrado con Id "+ id);
+        }
+        envioRepository.deleteById(id);
 
     }
 

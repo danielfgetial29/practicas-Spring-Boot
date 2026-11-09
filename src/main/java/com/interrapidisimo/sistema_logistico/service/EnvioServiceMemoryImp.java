@@ -1,7 +1,6 @@
-package com.interrapidisimo.sistema_logistico.service;
+/*package com.interrapidisimo.sistema_logistico.service;
 
 
-import com.interrapidisimo.sistema_logistico.model.Envio;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -77,3 +76,4 @@ public class EnvioServiceMemoryImp implements EnvioService{
                 .toList();
     }
 }
+*/
