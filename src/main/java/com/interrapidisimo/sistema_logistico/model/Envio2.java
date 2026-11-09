@@ -1,30 +1,49 @@
 package com.interrapidisimo.sistema_logistico.model;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "envios")
 public class Envio2 {
 
-    private String id;
+    @Id // indica que es el id de la entidad
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Genera un id unico
+    private Long id;
+
+    @Column(nullable = false)// Hace que este campo no sea nullo
     private String cliente;
+
+    @Column(nullable = false)
     private String destino;
+
+    @Column(nullable = false)
     private String estado;
+
+    @Column(name = "peso_kg",nullable = false)
     private double pesoKg;
+
+    @Column(nullable = false)
+    private double costo;
+
+
 
     public Envio2(){}
 
-    public Envio2(String cliente, String destino, String estado, double pesoKg) {
+    public Envio2(String cliente, String destino, String estado, double pesoKg, double costo) {
         this.cliente = cliente;
         this.destino = destino;
         this.estado = estado;
         this.pesoKg = pesoKg;
+        this.costo = costo;
     }
 
     //Getters y Setters
 
-
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -58,5 +77,13 @@ public class Envio2 {
 
     public void setPesoKg(double pesoKg) {
         this.pesoKg = pesoKg;
+    }
+
+    public double getCosto() {
+        return costo;
+    }
+
+    public void setCosto(double costo) {
+        this.costo = costo;
     }
 }
