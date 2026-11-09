@@ -9,5 +9,6 @@ import java.util.List;
 public interface EnvioRepository extends JpaRepository<Envio2, Long> {
 
     //PREFIJO + PROPIEDAD + PALABRA CLAVE
+
     List<Envio2> findByEstado(String Estado);
 }

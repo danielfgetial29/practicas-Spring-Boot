@@ -48,7 +48,7 @@ public class EnvioServiceJPA implements EnvioService2{
     @Override
     @Transactional
     public Envio2 update(Long id, Envio2 envioActualizado) {
-        Envio2 existente = envioRepository.findBy(id)
+        Envio2 existente = envioRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Envio no encontrado con id "+ id));
 
         if ("Entregado".equalsIgnoreCase(existente.getEstado())){
@@ -78,7 +78,7 @@ public class EnvioServiceJPA implements EnvioService2{
 
     @Override
     public List<Envio2> findByEstado(String estado) {
-        return List.of();
+        return envioRepository.findByEstado(estado);
     }
 
     // Metodos de logica de negocio
