@@ -2,6 +2,9 @@ package com.interrapidisimo.sistema_logistico.model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "envios")
 public class Envio2 {
@@ -25,7 +28,11 @@ public class Envio2 {
     @Column(nullable = false)
     private double costo;
 
+    //Relaciones
+    @OneToMany(mappedBy = "envio", cascade = CascadeType.ALL, fetch = FetchType.LAZY) //Para que no queden datos huerfanos
+    private List<AsignacionEnvio> asignaciones = new ArrayList<>();
 
+    //Constructores
 
     public Envio2(){}
 
