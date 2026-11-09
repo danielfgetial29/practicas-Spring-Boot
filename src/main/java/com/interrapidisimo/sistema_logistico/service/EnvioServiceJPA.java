@@ -2,6 +2,7 @@ package com.interrapidisimo.sistema_logistico.service;
 
 import com.interrapidisimo.sistema_logistico.model.Envio2;
 import com.interrapidisimo.sistema_logistico.repository.EnvioRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -45,8 +46,25 @@ public class EnvioServiceJPA implements EnvioService2{
     }
 
     @Override
-    public Envio2 update(Long id, Envio2 envio) {
-        return null;
+    @Transactional
+    public Envio2 update(Long id, Envio2 envioActualizado) {
+        Envio2 existente = envioRepository.findBy(id)
+                .orElseThrow(() -> new RuntimeException("Envio no encontrado con id "+ id));
+
+        if ("Entregado".equalsIgnoreCase(existente.getEstado())){
+            throw new RuntimeException("No se puede actualizar un envio que ya fue entregado");
+        }
+
+        if (envioActualizado.getEstado() != null && !envioActualizado.getEstado().equalsIgnoreCase(existente.getEstado())){
+            validarTRansaccionEstado(existente.getEstado(), envioActualizado.getEstado());
+        }
+
+        if (cambiarPesoODestino(existente, envioActualizado)){
+            double nuevoCosto = calcularCostoEnvio(envioActualizado.getPesoKg(), envioActualizado.getDestino());
+            envioActualizado.setCosto(nuevoCosto);
+        }
+        envioActualizado.setId(id);
+        return envioRepository.save(envioActualizado);
     }
 
     @Override
@@ -72,5 +90,21 @@ public class EnvioServiceJPA implements EnvioService2{
         if (pesoKg > 50) costoBase *= 1.2;
         if ("Internacional".equalsIgnoreCase(destino)) costoBase *= 1.5;
         return costoBase;
+    }
+
+    private void validarTRansaccionEstado(String actual, String nuevo){
+        boolean permitida = switch (actual){
+            case "Pendiente" -> nuevo.equalsIgnoreCase("En_ruta") || nuevo.equalsIgnoreCase("Cancelado");
+            case "En_ruta" -> nuevo.equalsIgnoreCase("Entregado");
+            default -> false;
+        };
+        if (!permitida){
+            throw new RuntimeException("No se puede cambiar de '"+ actual + "'a' "+ nuevo + "'");
+        }
+    }
+
+    private boolean cambiarPesoODestino(Envio2 existente, Envio2 envioactualizado){
+        return existente.getPesoKg() != envioactualizado.getPesoKg()
+                || existente.getDestino().equalsIgnoreCase(envioactualizado.getDestino());
     }
 }
