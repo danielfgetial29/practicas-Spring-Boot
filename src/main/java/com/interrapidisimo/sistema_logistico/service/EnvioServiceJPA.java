@@ -94,22 +94,28 @@ public class EnvioServiceJPA implements EnvioService2{
 
     }
 
-
     @Override
     public List<Envio2> findByEstado(String estado) {
         return envioRepository.findByEstado(estado);
     }
 
     @Override
-    public AsignacionEnvio asignarConductorAEnvio(Long envioId, Long conductorId, LocalDate fechaAsignacion, String responsable) {
-
+    @Transactional
+    public AsignacionEnvio asignarConductorAEnvio(
+            Long envioId,
+            Long conductorId,
+            String responsable,
+            String observaciones) {
         Envio2 envio = envioRepository.findById(envioId)
                 .orElseThrow(() -> new RuntimeException("Envio no encontrado "+ envioId));
 
         Conductor conductor = conductorRepository.findById(conductorId)
-                .orElseThrow(() - new RuntimeException("Conductor no encontrado "+ conductorId));
+                .orElseThrow(() -> new RuntimeException("Conductor no encontrado "+ conductorId));
 
-        AsignacionEnvio asignacionEnvio = new Run
+        //Generar fecha actual para el registro y evitar errores
+        AsignacionEnvio asignacion = new AsignacionEnvio(envio, conductor, LocalDate.now(), responsable, observaciones);
+
+        return asignacionEnvioRepository.save(asignacion);
     }
 
     // Metodos de logica de negocio

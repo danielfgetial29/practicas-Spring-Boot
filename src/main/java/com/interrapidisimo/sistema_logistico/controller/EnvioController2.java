@@ -1,5 +1,6 @@
 package com.interrapidisimo.sistema_logistico.controller;
 
+import com.interrapidisimo.sistema_logistico.model.AsignacionEnvio;
 import com.interrapidisimo.sistema_logistico.model.Envio2;
 import com.interrapidisimo.sistema_logistico.service.EnvioService2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RestController
+@RequestMapping("/api/envios")
 public class EnvioController2 {
 
     private final EnvioService2 envioService;
@@ -44,6 +47,21 @@ public class EnvioController2 {
     @DeleteMapping("/{id}")
     public void deleteEnvio(@PathVariable Long id){
         envioService.deleteById(id);
+    }
+
+    @PostMapping("/{envioId}/asignar")
+    public AsignacionEnvio asignarConductor(
+            @PathVariable Long envioId,
+            @RequestParam Long conductorId,
+            @RequestParam String responsable,
+            @RequestParam(required = false) String observaciones) {
+
+        return envioService.asignarConductorAEnvio(
+                envioId,
+                conductorId,
+                responsable,
+                observaciones
+        );
     }
 
 }
