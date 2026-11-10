@@ -1,21 +1,37 @@
 package com.interrapidisimo.sistema_logistico.service;
 
+import com.interrapidisimo.sistema_logistico.model.AsignacionEnvio;
+import com.interrapidisimo.sistema_logistico.model.Conductor;
 import com.interrapidisimo.sistema_logistico.model.Envio2;
+import com.interrapidisimo.sistema_logistico.repository.AsignacionEnvioRepository;
+import com.interrapidisimo.sistema_logistico.repository.ConductorRepository;
 import com.interrapidisimo.sistema_logistico.repository.EnvioRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
+@Service
+@Primary
 public class EnvioServiceJPA implements EnvioService2{
 
+    //Atributos
     // final porque no puede cambiar, siempre se envia el mismo
     private final EnvioRepository envioRepository;
+    private final ConductorRepository conductorRepository;
+    private final AsignacionEnvioRepository asignacionEnvioRepository;
+
 
     @Autowired // donde se hace la inyeccion de dependecias
-    public EnvioServiceJPA(EnvioRepository envioRepository) {
+    public EnvioServiceJPA(EnvioRepository envioRepository, ConductorRepository conductorRepository, AsignacionEnvioRepository asignacionEnvioRepository) {
         this.envioRepository = envioRepository;
+        this.conductorRepository = conductorRepository;
+        this.asignacionEnvioRepository = asignacionEnvioRepository;
     }
+
 
     @Override
     public List<Envio2> findAll() {
@@ -30,6 +46,7 @@ public class EnvioServiceJPA implements EnvioService2{
 
     //Guardar un envio
     @Override
+    @Transactional
     public Envio2 save(Envio2 envio) {
 
         double costo = calcularCostoEnvio(envio.getPesoKg(), envio.getDestino());
@@ -54,8 +71,9 @@ public class EnvioServiceJPA implements EnvioService2{
         if ("Entregado".equalsIgnoreCase(existente.getEstado())){
             throw new RuntimeException("No se puede actualizar un envio que ya fue entregado");
         }
-
-        if (envioActualizado.getEstado() != null && !envioActualizado.getEstado().equalsIgnoreCase(existente.getEstado())){
+        //Validar transicion SOLO si el es tado cambio
+        if (envioActualizado.getEstado() != null
+                && !envioActualizado.getEstado().equalsIgnoreCase(existente.getEstado())){
             validarTRansaccionEstado(existente.getEstado(), envioActualizado.getEstado());
         }
 
@@ -76,9 +94,22 @@ public class EnvioServiceJPA implements EnvioService2{
 
     }
 
+
     @Override
     public List<Envio2> findByEstado(String estado) {
         return envioRepository.findByEstado(estado);
+    }
+
+    @Override
+    public AsignacionEnvio asignarConductorAEnvio(Long envioId, Long conductorId, LocalDate fechaAsignacion, String responsable) {
+
+        Envio2 envio = envioRepository.findById(envioId)
+                .orElseThrow(() -> new RuntimeException("Envio no encontrado "+ envioId));
+
+        Conductor conductor = conductorRepository.findById(conductorId)
+                .orElseThrow(() - new RuntimeException("Conductor no encontrado "+ conductorId));
+
+        AsignacionEnvio asignacionEnvio = new Run
     }
 
     // Metodos de logica de negocio
