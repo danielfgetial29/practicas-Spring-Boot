@@ -2,6 +2,9 @@ package com.interrapidisimo.sistema_logistico.model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Entity
 @Table(name = "conductores")
@@ -15,18 +18,33 @@ public class Conductor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false)
     private String nombre;
+
+    @Column(nullable = false)
     private String apellido;
+
+    @Column(unique = true ,nullable = false)
     private String licencia;
+
+    @Column(nullable = false)
     private int telefono;
+
+    @Column(nullable = false)
     private String contrasena;
 
+    //Relacion mapeada
+    @OneToMany(mappedBy = "conductor", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<AsignacionEnvio> asignaciones = new ArrayList<>();
+
     //Constructores
+
     //Vacio
     public Conductor(){}
 
-    public Conductor(Long id, String nombre, String apellido, String licencia, int telefono, String contrasena) {
-        this.id = id;
+    //Con parametros
+    public Conductor(String nombre, String apellido, String licencia, int telefono, String contrasena) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.licencia = licencia;
@@ -53,11 +71,11 @@ public class Conductor {
         this.nombre = nombre;
     }
 
-    public String getapellido() {
+    public String getApellido() {
         return apellido;
     }
 
-    public void setapellido(String apellido) {
+    public void setApellido(String apellido) {
         this.apellido = apellido;
     }
 
@@ -83,5 +101,13 @@ public class Conductor {
 
     public void setContrasena(String contrasena) {
         this.contrasena = contrasena;
+    }
+
+    public List<AsignacionEnvio> getAsignaciones() {
+        return asignaciones;
+    }
+
+    public void setAsignaciones(List<AsignacionEnvio> asignaciones) {
+        this.asignaciones = asignaciones;
     }
 }
