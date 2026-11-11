@@ -11,5 +11,5 @@ public interface ConductorRepository extends JpaRepository<Conductor, Long> {
 
     //Metodos derivados
     List<Conductor> findByLicencia(String licencia);
-    List<Conductor> findByNombreContaining(String nomre);
+    List<Conductor> findByNombreContaining(String nombre);
 }
