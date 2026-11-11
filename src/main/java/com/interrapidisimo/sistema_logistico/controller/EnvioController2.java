@@ -12,8 +12,11 @@ import java.util.List;
 @RequestMapping("/api/envios")
 public class EnvioController2 {
 
+    // Se indica el contrato de lo que se puede hacer definido en la interfaz
+    // Y que no puede cambiarse (final)
     private final EnvioService2 envioService;
 
+    //Inyeccion de dependencias atravez del contrustor
     @Autowired
     public EnvioController2(EnvioService2 envioService) {
         this.envioService = envioService;
