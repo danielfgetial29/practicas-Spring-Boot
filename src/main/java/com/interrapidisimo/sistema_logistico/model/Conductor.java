@@ -29,7 +29,7 @@ public class Conductor {
     private String licencia;
 
     @Column(nullable = false)
-    private int telefono;
+    private String telefono;
 
     @Column(nullable = false)
     private String contrasena;
@@ -44,7 +44,7 @@ public class Conductor {
     public Conductor(){}
 
     //Con parametros
-    public Conductor(String nombre, String apellido, String licencia, int telefono, String contrasena) {
+    public Conductor(String nombre, String apellido, String licencia, String telefono, String contrasena) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.licencia = licencia;
@@ -87,11 +87,11 @@ public class Conductor {
         this.licencia = licencia;
     }
 
-    public int getTelefono() {
+    public String getTelefono() {
         return telefono;
     }
 
-    public void setTelefono(int telefono) {
+    public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
 
