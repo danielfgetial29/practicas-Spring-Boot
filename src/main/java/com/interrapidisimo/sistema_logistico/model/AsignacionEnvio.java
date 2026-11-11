@@ -12,7 +12,7 @@ public class AsignacionEnvio {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //RElacion de muchos a uno
+    //Relacion de muchos a uno
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "envio_id", nullable = false)
     private Envio2 envio;

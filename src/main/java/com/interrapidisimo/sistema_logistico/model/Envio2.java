@@ -28,8 +28,9 @@ public class Envio2 {
     @Column(nullable = false)
     private double costo;
 
-    //Relaciones
-    @OneToMany(mappedBy = "envio", cascade = CascadeType.ALL, fetch = FetchType.LAZY) //Para que no queden datos huerfanos
+    //Relaciones - Se debe dar el tipo de relacion que tendra con la otra tabla
+    // Ya que sin indicar o mapear la relacion en Java no se podran llamar
+    @OneToMany(mappedBy = "envio", cascade = CascadeType.ALL, fetch = FetchType.LAZY) //(CascadeType) Para que no queden datos huerfanos
     private List<AsignacionEnvio> asignaciones = new ArrayList<>();
 
     //Constructores
