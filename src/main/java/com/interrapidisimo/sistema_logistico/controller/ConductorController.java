@@ -3,9 +3,7 @@ package com.interrapidisimo.sistema_logistico.controller;
 import com.interrapidisimo.sistema_logistico.model.Conductor;
 import com.interrapidisimo.sistema_logistico.service.ConductorService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,5 +22,10 @@ public class ConductorController {
     @GetMapping
     public List<Conductor> getAllConductores(){
         return conductorService.findAll();
+    }
+
+    @PostMapping
+    public Conductor createConductor(@RequestBody Conductor conductor){
+        return  conductorService.save(conductor);
     }
 }
