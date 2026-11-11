@@ -94,4 +94,12 @@ public class Envio2 {
     public void setCosto(double costo) {
         this.costo = costo;
     }
+
+    public List<AsignacionEnvio> getAsignaciones() {
+        return asignaciones;
+    }
+
+    public void setAsignaciones(List<AsignacionEnvio> asignaciones) {
+        this.asignaciones = asignaciones;
+    }
 }
