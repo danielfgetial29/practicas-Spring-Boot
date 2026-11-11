@@ -19,7 +19,6 @@ public class ConductorServiceJPA implements ConductorService{
         this.conductorRepository = conductorRepository;
     }
 
-
     //Traer TODOS los conductores
     @Override
     public List<Conductor> findAll() {
@@ -33,7 +32,7 @@ public class ConductorServiceJPA implements ConductorService{
 
     @Override
     public Conductor save(Conductor conductor) {
-        return null;
+        return conductorRepository.save(conductor);
     }
 
     @Override
