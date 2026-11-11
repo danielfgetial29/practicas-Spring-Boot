@@ -13,19 +13,19 @@ public interface ConductorService {
     List<Conductor> findAll();
 
     //Encontar un conductor por su id
-    Conductor findById(String id);
+    Conductor findById(Long id);
 
     //Guardar un conductor nuevo
     Conductor save(Conductor conductor);
 
     //Actualizar todos los datos de un conductor
-    Conductor update(String id, Conductor conductor);
+    Conductor update(Long id, Conductor conductor);
 
     //Actualizar solo un dato del conductor (su contraseña)
-    Conductor updateContrasena(String id, String nuevaContrasena);
+    Conductor updateContrasena(Long id, String nuevaContrasena);
 
     //Eliminar
-    void deleteById(String id);
+    void deleteById(Long id);
 
     //Buscar por tipo de licencia
     List<Conductor> findByLicencia(String licencia);

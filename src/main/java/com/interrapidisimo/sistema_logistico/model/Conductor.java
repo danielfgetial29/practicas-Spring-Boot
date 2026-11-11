@@ -1,24 +1,50 @@
 package com.interrapidisimo.sistema_logistico.model;
 
+import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
+
+@Entity
+@Table(name = "conductores")
 public class Conductor {
     //1. Completar la clase POJO de conductor con los atributos id, nombre, apellido, licencia, telefono y contraseña
     //2. Crear Interfaz ConductorService y su respectiva clase de implementacion
     //3. Crear clase controller para recibir solicitudes HTTP y hacer las respectivas pruebas con Postman o Insomnia
 
+
     //Atributos
-    private String id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false)
     private String nombre;
+
+    @Column(nullable = false)
     private String apellido;
+
+    @Column(unique = true ,nullable = false)
     private String licencia;
-    private int telefono;
+
+    @Column(nullable = false)
+    private String telefono;
+
+    @Column(nullable = false)
     private String contrasena;
 
+    //Relacion mapeada
+    @OneToMany(mappedBy = "conductor", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<AsignacionEnvio> asignaciones = new ArrayList<>();
+
     //Constructores
+
     //Vacio
     public Conductor(){}
 
-    public Conductor(String id, String nombre, String apellido, String licencia, int telefono, String contrasena) {
-        this.id = id;
+    //Con parametros
+    public Conductor(String nombre, String apellido, String licencia, String telefono, String contrasena) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.licencia = licencia;
@@ -29,11 +55,11 @@ public class Conductor {
 
     // Getters y Setters
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -45,11 +71,11 @@ public class Conductor {
         this.nombre = nombre;
     }
 
-    public String getapellido() {
+    public String getApellido() {
         return apellido;
     }
 
-    public void setapellido(String apellido) {
+    public void setApellido(String apellido) {
         this.apellido = apellido;
     }
 
@@ -61,11 +87,11 @@ public class Conductor {
         this.licencia = licencia;
     }
 
-    public int getTelefono() {
+    public String getTelefono() {
         return telefono;
     }
 
-    public void setTelefono(int telefono) {
+    public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
 
@@ -75,5 +101,13 @@ public class Conductor {
 
     public void setContrasena(String contrasena) {
         this.contrasena = contrasena;
+    }
+
+    public List<AsignacionEnvio> getAsignaciones() {
+        return asignaciones;
+    }
+
+    public void setAsignaciones(List<AsignacionEnvio> asignaciones) {
+        this.asignaciones = asignaciones;
     }
 }
