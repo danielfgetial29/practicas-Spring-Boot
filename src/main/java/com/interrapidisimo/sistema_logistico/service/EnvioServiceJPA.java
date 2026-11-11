@@ -74,7 +74,7 @@ public class EnvioServiceJPA implements EnvioService2{
         //Validar transicion SOLO si el es tado cambio
         if (envioActualizado.getEstado() != null
                 && !envioActualizado.getEstado().equalsIgnoreCase(existente.getEstado())){
-            validarTRansaccionEstado(existente.getEstado(), envioActualizado.getEstado());
+            validarTransaccionEstado(existente.getEstado(), envioActualizado.getEstado());
         }
 
         if (cambiarPesoODestino(existente, envioActualizado)){
@@ -106,6 +106,7 @@ public class EnvioServiceJPA implements EnvioService2{
             Long conductorId,
             String responsable,
             String observaciones) {
+
         Envio2 envio = envioRepository.findById(envioId)
                 .orElseThrow(() -> new RuntimeException("Envio no encontrado "+ envioId));
 
@@ -129,7 +130,7 @@ public class EnvioServiceJPA implements EnvioService2{
         return costoBase;
     }
 
-    private void validarTRansaccionEstado(String actual, String nuevo){
+    private void validarTransaccionEstado(String actual, String nuevo){
         boolean permitida = switch (actual){
             case "Pendiente" -> nuevo.equalsIgnoreCase("En_ruta") || nuevo.equalsIgnoreCase("Cancelado");
             case "En_ruta" -> nuevo.equalsIgnoreCase("Entregado");
