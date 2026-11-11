@@ -1,12 +1,20 @@
 package com.interrapidisimo.sistema_logistico.model;
 
+import jakarta.persistence.*;
+
+
+@Entity
+@Table(name = "conductores")
 public class Conductor {
     //1. Completar la clase POJO de conductor con los atributos id, nombre, apellido, licencia, telefono y contraseña
     //2. Crear Interfaz ConductorService y su respectiva clase de implementacion
     //3. Crear clase controller para recibir solicitudes HTTP y hacer las respectivas pruebas con Postman o Insomnia
 
+
     //Atributos
-    private String id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String nombre;
     private String apellido;
     private String licencia;
@@ -17,7 +25,7 @@ public class Conductor {
     //Vacio
     public Conductor(){}
 
-    public Conductor(String id, String nombre, String apellido, String licencia, int telefono, String contrasena) {
+    public Conductor(Long id, String nombre, String apellido, String licencia, int telefono, String contrasena) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -29,11 +37,11 @@ public class Conductor {
 
     // Getters y Setters
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
