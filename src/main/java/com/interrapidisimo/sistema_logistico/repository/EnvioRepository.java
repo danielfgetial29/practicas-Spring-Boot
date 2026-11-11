@@ -13,5 +13,5 @@ public interface EnvioRepository extends JpaRepository<Envio2, Long> {
 
     List<Envio2> findByEstado(String estado);
     List<Envio2> findByCliente(String cliente);
-    List<Envio2> finbyClienteAndEstado(String cliente, String estado);
+    List<Envio2> findByClienteAndEstado(String cliente, String estado);
 }
